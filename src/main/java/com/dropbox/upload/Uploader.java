@@ -1,7 +1,8 @@
 package com.dropbox.upload;
 
 public interface Uploader {
-   void upload(String path);
+
+   void upload(String path,String name);
 
 
 }
