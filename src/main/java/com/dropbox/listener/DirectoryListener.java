@@ -6,17 +6,19 @@ import com.dropbox.upload.Uploader;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.dropbox.config.Keys.DIRECTORY;
 
-public class DirectoryListener {
-    private final Uploader uploader;
+public class DirectoryListener  {
+    private final DropBoxUploader dropBoxUploader;
     private final String dir;
 
 
-    public DirectoryListener(Uploader uploader,ConfigService cfg) {
-        this.uploader = uploader;
-        this.dir=cfg.get(DIRECTORY);
+    public DirectoryListener(String dir, DropBoxUploader dropBoxUploader) {
+        this.dropBoxUploader = dropBoxUploader;
+        this.dir=dir;
     }
 
     public void listen() {
@@ -26,9 +28,11 @@ public class DirectoryListener {
             path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             WatchKey key;
             while ((key = watchService.take()) != null) {
-                String name =  key.pollEvents().get(0).context().toString();
+                final String name =  key.pollEvents().get(0).context().toString();
                 System.out.println(name);
-                uploader.upload(dir + name, name);
+
+
+                dropBoxUploader.upload(dir + name, name);
                 key.reset();
             }
         }catch (IOException|InterruptedException e){

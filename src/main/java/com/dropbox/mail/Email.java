@@ -1,14 +1,15 @@
 package com.dropbox.mail;
 
 public class Email {
+    private String adress;
     private String subject;
     private String content;
-    private String to;
 
-    public Email(String subject, String content, String to) {
-        this.subject = subject;
+
+    public Email(String adress, String subject, String content) {
+        this.adress = adress;
         this.content = content;
-        this.to = to;
+        this.subject= subject;
     }
 
     public String getSubject() {
@@ -19,7 +20,7 @@ public class Email {
         return content;
     }
 
-    public String getTo() {
-        return to;
+    public String getAdress() {
+        return adress;
     }
 }

@@ -2,11 +2,13 @@ package com.dropbox.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigService {
     private Properties properties=new Properties();
     private String path;
+    private InputStream input = null;
 
     public ConfigService(String path) {
         this.path=path;
